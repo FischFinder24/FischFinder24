@@ -11,9 +11,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Karte: Klick-Handler
-map.on('click', async (e) => {
-  const { lat, lng } = e.latlng;
-  L.marker([lat, lng]).addTo(map).bindPopup('Fischfund!').openPopup();
+let clickedLatLng = null;
+
+map.on('click', (e) => {
+  clickedLatLng = e.latlng;
+  document.getElementById('form-popup').classList.remove('hidden');
+});
+
 
   // In Supabase speichern
   await supabase.from('fischfunde').insert({

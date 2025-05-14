@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FischFinder24</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <h1>FischFinder24</h1>
-  <p>Klicke auf die Karte, um einen Fischfund zu markieren!</p>
 
-  <div id="map"></div>
-<div id="form-popup" class="hidden">
-  <h3>Fischfund hinzufügen</h3>
-  <label>Fischart:</label><br>
-  <input type="text" id="fischart"><br>
-  <label>Beschreibung:</label><br>
-  <textarea id="beschreibung"></textarea><br>
-  <button onclick="saveFund()">Speichern</button>
-  <button onclick="cancelFund()">Abbrechen</button>
-</div>
+  <div id="auth">
+    <input type="email" id="email" placeholder="E-Mail">
+    <input type="password" id="password" placeholder="Passwort">
+    <button id="signup">Registrieren</button>
+    <button id="login">Einloggen</button>
+    <button id="logout" style="display:none;">Ausloggen</button>
+  </div>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <div id="map" style="display:none;"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
-

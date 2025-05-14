@@ -17,6 +17,34 @@ map.on('click', (e) => {
   clickedLatLng = e.latlng;
   document.getElementById('form-popup').classList.remove('hidden');
 });
+function cancelFund() {
+  document.getElementById('form-popup').classList.add('hidden');
+  clickedLatLng = null;
+}
+
+async function saveFund() {
+  const art = document.getElementById('fischart').value;
+  const beschreibung = document.getElementById('beschreibung').value;
+
+  if (!art || !clickedLatLng) return alert("Bitte Fischart eingeben und auf die Karte klicken.");
+
+  const { lat, lng } = clickedLatLng;
+
+  await supabase.from('fischfunde').insert({
+    latitude: lat,
+    longitude: lng,
+    art,
+    beschreibung
+  });
+
+  L.marker([lat, lng]).addTo(map).bindPopup(`<strong>${art}</strong><br>${beschreibung}`).openPopup();
+
+  // Formular zurücksetzen
+  document.getElementById('form-popup').classList.add('hidden');
+  clickedLatLng = null;
+  document.getElementById('fischart').value = '';
+  document.getElementById('beschreibung').value = '';
+}
 
 
   // In Supabase speichern

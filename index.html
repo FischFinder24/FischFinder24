@@ -4,12 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FischFinder24</title>
+
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
   <h1>FischFinder24</h1>
 
+  <!-- Auth-Formular -->
   <div id="auth">
     <input type="email" id="email" placeholder="E-Mail">
     <input type="password" id="password" placeholder="Passwort">
@@ -18,9 +27,10 @@
     <button id="logout" style="display:none;">Ausloggen</button>
   </div>
 
+  <!-- Karte -->
   <div id="map" style="display:none;"></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Custom JS -->
   <script src="script.js"></script>
 </body>
 </html>

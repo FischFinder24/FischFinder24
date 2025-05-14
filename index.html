@@ -11,6 +11,15 @@
   <p>Klicke auf die Karte, um einen Fischfund zu markieren!</p>
 
   <div id="map"></div>
+<div id="form-popup" class="hidden">
+  <h3>Fischfund hinzufügen</h3>
+  <label>Fischart:</label><br>
+  <input type="text" id="fischart"><br>
+  <label>Beschreibung:</label><br>
+  <textarea id="beschreibung"></textarea><br>
+  <button onclick="saveFund()">Speichern</button>
+  <button onclick="cancelFund()">Abbrechen</button>
+</div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>

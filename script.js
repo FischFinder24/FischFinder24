@@ -1,70 +1,66 @@
-// Supabase-Konfiguration
-const supabaseUrl = 'https://your-project-id.supabase.co';
-const supabaseKey = 'public-anon-key';
+// Deine Supabase URL und Key einfügen
+const supabaseUrl = 'https://xnauxpkrcwpdtvezxxfj.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhuYXV4cGtyY3dwZHR2ZXp4eGZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMjIyMTcsImV4cCI6MjA2Mjc5ODIxN30.SvjV6zh_rBJ94z9AXbbH5aqt2U-RAkoLzgAmuChKDK4';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// Karte initialisieren
-let map = L.map('map').setView([51.1657, 10.4515], 6); // Deutschland-Zentrum
+document.getElementById("signup").onclick = async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const { error } = await supabase.auth.signUp({ email, password });
+  if (error) alert(error.message);
+  else alert("Registrierung erfolgreich! Bitte E-Mail bestätigen.");
+};
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap Contributors'
-}).addTo(map);
+document.getElementById("login").onclick = async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const { error, data } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) alert(error.message);
+  else {
+    alert("Eingeloggt!");
+    document.getElementById("map").style.display = "block";
+    document.getElementById("logout").style.display = "inline-block";
+    initMap();
+  }
+};
 
-// Karte: Klick-Handler
-let clickedLatLng = null;
+document.getElementById("logout").onclick = async () => {
+  await supabase.auth.signOut();
+  location.reload();
+};
 
-map.on('click', (e) => {
-  clickedLatLng = e.latlng;
-  document.getElementById('form-popup').classList.remove('hidden');
-});
-function cancelFund() {
-  document.getElementById('form-popup').classList.add('hidden');
-  clickedLatLng = null;
-}
+async function initMap() {
+  const map = L.map('map').setView([51.1657, 10.4515], 6); // Deutschland-Zentrum
 
-async function saveFund() {
-  const art = document.getElementById('fischart').value;
-  const beschreibung = document.getElementById('beschreibung').value;
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap-Mitwirkende'
+  }).addTo(map);
 
-  if (!art || !clickedLatLng) return alert("Bitte Fischart eingeben und auf die Karte klicken.");
+  map.on('click', async function (e) {
+    const user = await supabase.auth.getUser();
+    if (!user.data.user) {
+      alert("Bitte einloggen, um Funde zu dokumentieren.");
+      return;
+    }
 
-  const { lat, lng } = clickedLatLng;
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
 
-  await supabase.from('fischfunde').insert({
-    latitude: lat,
-    longitude: lng,
-    art,
-    beschreibung
+    const fishName = prompt("Welchen Fisch hast du hier gefunden?");
+    if (!fishName) return;
+
+    L.marker([lat, lng]).addTo(map)
+      .bindPopup(`${fishName} hier gefunden`)
+      .openPopup();
+
+    await supabase.from("fish_finds").insert([
+      { user_id: user.data.user.id, fish_name: fishName, lat, lng }
+    ]);
   });
 
-  L.marker([lat, lng]).addTo(map).bindPopup(`<strong>${art}</strong><br>${beschreibung}`).openPopup();
-
-  // Formular zurücksetzen
-  document.getElementById('form-popup').classList.add('hidden');
-  clickedLatLng = null;
-  document.getElementById('fischart').value = '';
-  document.getElementById('beschreibung').value = '';
-}
-
-
-  // In Supabase speichern
-  await supabase.from('fischfunde').insert({
-    latitude: lat,
-    longitude: lng
-  });
-});
-
-// Vorhandene Funde laden
-async function loadFishFindings() {
-  const { data, error } = await supabase.from('fischfunde').select('*');
-  if (error) return console.error('Fehler beim Laden:', error);
-
-  data.forEach(fund => {
-    L.marker([fund.latitude, fund.longitude])
-      .addTo(map)
-      .bindPopup(`<strong>${fund.art}</strong><br>${fund.beschreibung || ''}`);
+  const { data: finds } = await supabase.from("fish_finds").select("*");
+  finds.forEach(f => {
+    L.marker([f.lat, f.lng]).addTo(map)
+      .bindPopup(`${f.fish_name} (von Nutzer)`);
   });
 }
-
-
-

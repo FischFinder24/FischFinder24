@@ -25,8 +25,9 @@ if (error || !data || !data.user) {
   document.getElementById("status").innerText = "❌ Login fehlgeschlagen. Überprüfe E-Mail und Passwort.";
   document.getElementById("status").style.color = "red";
 } else {
-  // Erfolgreich eingeloggt → Weiterleitung
+  console.log("Login erfolgreich – weiterleiten...");
   window.location.href = "dashboard.html";
 }
+
 
 });

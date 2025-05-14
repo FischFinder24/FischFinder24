@@ -6,6 +6,12 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+  <script>
+  if (window.location.search === "?") {
+    window.location.href = window.location.origin + window.location.pathname;
+  }
+  </script>
+</head>
 <body>
   <div class="container">
     <img src="logo.png" alt="Logo" class="logo">

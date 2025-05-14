@@ -2,31 +2,28 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Fischfinder24 – Login</title>
+  <title>FischFinder24</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-  <script>
-  if (window.location.search === "?") {
-    window.location.href = window.location.origin + window.location.pathname;
-  }
-  </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
-  <div class="container">
-    <img src="logo.png" alt="Logo" class="logo">
-    <h1>Willkommen bei Fischfinder24</h1>
+  <h1>FischFinder24</h1>
 
-    <form id="login-form">
-      <input type="email" id="email" placeholder="E-Mail" required>
-      <input type="password" id="password" placeholder="Passwort" required>
-      <button type="submit">Einloggen</button>
-    </form>
-
-    <p id="status"></p>
+  <div id="auth-section">
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Passwort" />
+    <button onclick="signUp()">Registrieren</button>
+    <button onclick="signIn()">Einloggen</button>
+    <button onclick="signOut()">Ausloggen</button>
   </div>
 
+  <div id="map-section" style="display: none;">
+    <h2>Deine Fischfunde</h2>
+    <div id="map"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script src="script.js"></script>
 </body>
 </html>
-

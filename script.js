@@ -21,14 +21,12 @@ document.getElementById("login-form").addEventListener("submit", async function(
     password
   });
 
-  if (error || !data || !data.user) {
-    document.getElementById("status").innerText = "❌ Login fehlgeschlagen. Überprüfe E-Mail und Passwort.";
-    document.getElementById("status").style.color = "red";
-  } else {
-    document.getElementById("status").innerText = "✅ Login erfolgreich! Willkommen, " + data.user.email;
-    document.getElementById("status").style.color = "green";
+if (error || !data || !data.user) {
+  document.getElementById("status").innerText = "❌ Login fehlgeschlagen. Überprüfe E-Mail und Passwort.";
+  document.getElementById("status").style.color = "red";
+} else {
+  // Erfolgreich eingeloggt → Weiterleitung
+  window.location.href = "dashboard.html";
+}
 
-    // Optional: Weiterleitung nach Login
-    // window.location.href = "dashboard.html";
-  }
 });

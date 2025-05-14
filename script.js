@@ -55,15 +55,16 @@ async function saveFund() {
 });
 
 // Vorhandene Funde laden
-loadFishFindings();
-
 async function loadFishFindings() {
   const { data, error } = await supabase.from('fischfunde').select('*');
-  if (error) return console.error('Fehler beim Laden der Funde:', error);
+  if (error) return console.error('Fehler beim Laden:', error);
 
   data.forEach(fund => {
-    L.marker([fund.latitude, fund.longitude]).addTo(map)
-      .bindPopup('Fischfund');
+    L.marker([fund.latitude, fund.longitude])
+      .addTo(map)
+      .bindPopup(`<strong>${fund.art}</strong><br>${fund.beschreibung || ''}`);
   });
 }
+
+
 

@@ -1,8 +1,18 @@
-// Deine Supabase URL und Key einfügen
-const supabaseUrl = 'https://xnauxpkrcwpdtvezxxfj.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhuYXV4cGtyY3dwZHR2ZXp4eGZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMjIyMTcsImV4cCI6MjA2Mjc5ODIxN30.SvjV6zh_rBJ94z9AXbbH5aqt2U-RAkoLzgAmuChKDK4';
+document.addEventListener("DOMContentLoaded", () => {
+  // Deckblatt-Logik
+  const startButton = document.getElementById("start-button");
+  startButton.addEventListener("click", () => {
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("auth").style.display = "block";
+  });
+});
+
+// Supabase-Initialisierung
+const supabaseUrl = 'https://YOUR_SUPABASE_URL.supabase.co';
+const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+// Registrierung
 document.getElementById("signup").onclick = async () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -11,6 +21,7 @@ document.getElementById("signup").onclick = async () => {
   else alert("Registrierung erfolgreich! Bitte E-Mail bestätigen.");
 };
 
+// Login
 document.getElementById("login").onclick = async () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -24,13 +35,15 @@ document.getElementById("login").onclick = async () => {
   }
 };
 
+// Logout
 document.getElementById("logout").onclick = async () => {
   await supabase.auth.signOut();
   location.reload();
 };
 
+// Karte initialisieren
 async function initMap() {
-  const map = L.map('map').setView([51.1657, 10.4515], 6); // Deutschland-Zentrum
+  const map = L.map('map').setView([51.1657, 10.4515], 6);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap-Mitwirkende'
@@ -45,7 +58,6 @@ async function initMap() {
 
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
-
     const fishName = prompt("Welchen Fisch hast du hier gefunden?");
     if (!fishName) return;
 

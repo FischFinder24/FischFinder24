@@ -136,19 +136,60 @@ button:hover {
 }
 #add-fish-popup {
   position: fixed;
-  top: 30%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -30%);
+  transform: translate(-50%, -50%);
   background-color: white;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  border-radius: 10px;
+  padding: 25px;
+  width: 320px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border-radius: 12px;
   z-index: 2000;
-  width: 300px;
+  text-align: left;
 }
 
-#add-fish-popup input, #add-fish-popup textarea {
+#add-fish-popup h3 {
+  margin-top: 0;
+  font-size: 22px;
+  text-align: center;
+}
+
+#add-fish-popup input,
+#add-fish-popup textarea {
   width: 100%;
-  margin: 5px 0;
-  padding: 8px;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+#add-fish-popup input[type="file"] {
+  padding: 4px;
+}
+
+#add-fish-popup button {
+  width: 48%;
+  padding: 10px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  background-color: #2196f3;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#add-fish-popup button:hover {
+  background-color: #1976d2;
+}
+
+#add-fish-popup button:last-of-type {
+  background-color: #f44336;
+}
+
+#add-fish-popup button:last-of-type:hover {
+  background-color: #d32f2f;
 }

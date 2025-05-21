@@ -66,6 +66,9 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 15px;
+  overflow: hidden; /* Wichtig! Schneidet überstehende Bildteile ab */
+  margin: 20px; /* optional für etwas Abstand zum Fensterrand */
 }
 #auth > div {
   background-color: rgba(255, 255, 255, 0.85);
@@ -84,10 +87,9 @@ button:hover {
 }
 
 .site-title {
-  font-size: 48px;
-  color: white;
+  font-size: 60px;
+  color: black;
   margin-bottom: 30px;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
 }
 
 .auth-box {

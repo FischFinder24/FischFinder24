@@ -100,9 +100,11 @@ button:hover {
 }
 #map-container {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 60px); /* 30px oben + 30px unten */
+  margin: 30px 0; /* oben/unten Abstand, links/rechts bleibt */
   position: relative;
-  display: none; /* wird erst nach Login eingeblendet */
+  display: none;
+}
 }
 
 #map {

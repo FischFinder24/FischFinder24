@@ -134,3 +134,21 @@ button:hover {
 #logout-map:hover {
   background-color: #d32f2f;
 }
+#add-fish-popup {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border-radius: 10px;
+  z-index: 2000;
+  width: 300px;
+}
+
+#add-fish-popup input, #add-fish-popup textarea {
+  width: 100%;
+  margin: 5px 0;
+  padding: 8px;
+}

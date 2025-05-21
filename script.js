@@ -44,31 +44,6 @@ document.getElementById("map-container").style.display = "block";
   // Karte initialisieren
   async function initMap() {
     const map = L.map('map').setView([51.1657, 10.4515], 6);
-// Tile-Layer definieren
-const tileLayers = {
-  osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap-Mitwirkende'
-  }),
-  topo: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-    attribution: 'Kartendaten: © OpenStreetMap, Darstellung: © OpenTopoMap (CC-BY-SA)'
-  }),
-  esri: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Tiles © Esri'
-  })
-};
-
-// Standard-Layer setzen
-tileLayers.osm.addTo(map);
-
-// Dropdown-Funktion
-const selector = document.getElementById('map-style-selector');
-selector.addEventListener('change', () => {
-  // Alte Layer entfernen
-  Object.values(tileLayers).forEach(layer => map.removeLayer(layer));
-  // Neue hinzufügen
-  const selected = selector.value;
-  tileLayers[selected].addTo(map);
-});
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap-Mitwirkende'

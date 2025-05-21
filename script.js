@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Supabase-Initialisierung
-  const supabaseUrl = 'https://xnauxpkrcwpdtvezxxfj.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJI...'; // Schlüssel gekürzt für Übersicht
+  const supabaseUrl = https://xnauxpkrcwpdtvezxxfj.supabase.co;
+  const supabaseKey = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhuYXV4cGtyY3dwZHR2ZXp4eGZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMjIyMTcsImV4cCI6MjA2Mjc5ODIxN30.SvjV6zh_rBJ94z9AXbbH5aqt2U-RAkoLzgAmuChKDK4; // Schlüssel gekürzt für Übersicht
   const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   // Registrierung

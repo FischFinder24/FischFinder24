@@ -40,6 +40,12 @@ document.getElementById("map-container").style.display = "block";
     await supabase.auth.signOut();
     location.reload();
   };
+  
+  document.getElementById("logout-map").onclick = async () => {
+  await supabase.auth.signOut();
+  location.reload();
+};
+
 
   // Karte initialisieren
   async function initMap() {

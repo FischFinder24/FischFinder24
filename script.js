@@ -55,23 +55,37 @@ document.getElementById("map-container").style.display = "block";
       attribution: '&copy; OpenStreetMap-Mitwirkende'
     }).addTo(map);
 
-    map.on('click', async function (e) {
+  map.on('click', async function (e) {
   const user = await supabase.auth.getUser();
   if (!user.data.user) {
     alert("Bitte einloggen, um Funde zu dokumentieren.");
     return;
   }
 
-  // Zeige Eingabefenster
-  document.getElementById("add-fish-popup").style.display = "block";
+  // Nur wenn Popup existiert
+  const popup = document.getElementById("add-fish-popup");
+  if (!popup) {
+    console.error("Popup nicht gefunden");
+    return;
+  }
 
-  // Speichern-Logik
+  popup.style.display = "block";
+
+  const lat = e.latlng.lat;
+  const lng = e.latlng.lng;
+
+  // Einmalige Click Handler registrieren (alte zuerst entfernen)
+  const saveBtn = document.getElementById("save-fish");
+  const cancelBtn = document.getElementById("cancel-fish");
+
+  // Alte Listener entfernen (wichtiger Fix!)
+  saveBtn.replaceWith(saveBtn.cloneNode(true));
+  cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+
   document.getElementById("save-fish").onclick = async () => {
     const fishName = document.getElementById("fish-name").value;
     const description = document.getElementById("fish-desc").value;
     const imageFile = document.getElementById("fish-image").files[0];
-    const lat = e.latlng.lat;
-    const lng = e.latlng.lng;
 
     let imageUrl = null;
 
@@ -111,15 +125,14 @@ document.getElementById("map-container").style.display = "block";
     if (imageUrl) popupContent += `<br><img src="${imageUrl}" width="100%">`;
     marker.bindPopup(popupContent).openPopup();
 
-    document.getElementById("add-fish-popup").style.display = "none";
+    popup.style.display = "none";
     document.getElementById("fish-name").value = '';
     document.getElementById("fish-desc").value = '';
     document.getElementById("fish-image").value = '';
   };
 
-  // Abbrechen
   document.getElementById("cancel-fish").onclick = () => {
-    document.getElementById("add-fish-popup").style.display = "none";
+    popup.style.display = "none";
     document.getElementById("fish-name").value = '';
     document.getElementById("fish-desc").value = '';
     document.getElementById("fish-image").value = '';

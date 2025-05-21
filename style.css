@@ -117,7 +117,7 @@ button:hover {
   margin: 0;
 }
 
-#logout {
+#logout-map {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -131,6 +131,6 @@ button:hover {
   cursor: pointer;
 }
 
-#logout:hover {
+#logout-map:hover {
   background-color: #d32f2f;
 }

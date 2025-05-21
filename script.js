@@ -128,7 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let popupContent = `<strong>${fishName}</strong><br>${description}`;
         if (imageUrl) popupContent += `<br><img src="${imageUrl}" width="100%">`;
 
-        L.marker([lat, lng]).addTo(map).bindPopup(popupContent).openPopup();
+        popupContent += `<br><button class="delete-fish" data-id="${f.id}">🗑️ Löschen</button>`;
+const marker = L.marker([f.lat, f.lng]).addTo(map);
+marker.bindPopup(popupContent);
+
 
         popup.style.display = "none";
         document.getElementById("fish-name").value = '';
@@ -141,7 +144,19 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("fish-name").value = '';
         document.getElementById("fish-desc").value = '';
         document.getElementById("fish-image").value = '';
-      };
-    });
+
+        document.addEventListener('click', async (e) => {
+  if (e.target.classList.contains('delete-fish')) {
+    const id = e.target.getAttribute('data-id');
+    const confirmed = confirm("Diesen Fisch-Fund wirklich löschen?");
+    if (!confirmed) return;
+
+    const { error } = await supabase.from("fish_finds").delete().eq("id", id);
+    if (error) {
+      alert("Fehler beim Löschen.");
+    } else {
+      alert("Fisch-Fund gelöscht.");
+      location.reload(); // Alternativ: Marker direkt entfernen
+    }
   }
 });

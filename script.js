@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Deckblatt-Logik
-  const startButton = document.getElementById("start-button");
-  startButton.addEventListener("click", () => {
-    document.getElementById("start-screen").style.display = "none";
-    document.getElementById("auth").style.display = "block";
-  });
+ document.getElementById("start-button")?.addEventListener("click", () => {
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("auth").style.display = "block";
+});
+
 
   // Supabase-Initialisierung
   const supabaseUrl = 'https://xnauxpkrcwpdtvezxxfj.supabase.co';

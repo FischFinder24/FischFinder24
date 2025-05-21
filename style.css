@@ -134,3 +134,9 @@ button:hover {
 #logout:hover {
   background-color: #d32f2f;
 }
+#map-style-selector {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: white;
+  font-size: 14px;
+}

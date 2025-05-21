@@ -56,30 +56,72 @@ document.getElementById("map-container").style.display = "block";
     }).addTo(map);
 
     map.on('click', async function (e) {
-      const user = await supabase.auth.getUser();
-      if (!user.data.user) {
-        alert("Bitte einloggen, um Funde zu dokumentieren.");
+  const user = await supabase.auth.getUser();
+  if (!user.data.user) {
+    alert("Bitte einloggen, um Funde zu dokumentieren.");
+    return;
+  }
+
+  // Zeige Eingabefenster
+  document.getElementById("add-fish-popup").style.display = "block";
+
+  // Speichern-Logik
+  document.getElementById("save-fish").onclick = async () => {
+    const fishName = document.getElementById("fish-name").value;
+    const description = document.getElementById("fish-desc").value;
+    const imageFile = document.getElementById("fish-image").files[0];
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+
+    let imageUrl = null;
+
+    if (imageFile) {
+      const fileExt = imageFile.name.split('.').pop();
+      const filePath = `${Date.now()}.${fileExt}`;
+      const { data, error } = await supabase.storage
+        .from('fish-images')
+        .upload(filePath, imageFile);
+
+      if (error) {
+        alert("Bild-Upload fehlgeschlagen");
         return;
       }
 
-      const lat = e.latlng.lat;
-      const lng = e.latlng.lng;
-      const fishName = prompt("Welchen Fisch hast du hier gefunden?");
-      if (!fishName) return;
+      const { data: publicUrlData } = supabase
+        .storage
+        .from('fish-images')
+        .getPublicUrl(filePath);
 
-      L.marker([lat, lng]).addTo(map)
-        .bindPopup(`${fishName} hier gefunden`)
-        .openPopup();
+      imageUrl = publicUrlData.publicUrl;
+    }
 
-      await supabase.from("fish_finds").insert([
-        { user_id: user.data.user.id, fish_name: fishName, lat, lng }
-      ]);
-    });
+    await supabase.from("fish_finds").insert([
+      {
+        user_id: user.data.user.id,
+        fish_name: fishName,
+        description: description,
+        image_url: imageUrl,
+        lat,
+        lng
+      }
+    ]);
 
-    const { data: finds } = await supabase.from("fish_finds").select("*");
-    finds.forEach(f => {
-      L.marker([f.lat, f.lng]).addTo(map)
-        .bindPopup(`${f.fish_name} (von Nutzer)`);
-    });
-  }
+    const marker = L.marker([lat, lng]).addTo(map);
+    let popupContent = `<strong>${fishName}</strong><br>${description}`;
+    if (imageUrl) popupContent += `<br><img src="${imageUrl}" width="100%">`;
+    marker.bindPopup(popupContent).openPopup();
+
+    document.getElementById("add-fish-popup").style.display = "none";
+    document.getElementById("fish-name").value = '';
+    document.getElementById("fish-desc").value = '';
+    document.getElementById("fish-image").value = '';
+  };
+
+  // Abbrechen
+  document.getElementById("cancel-fish").onclick = () => {
+    document.getElementById("add-fish-popup").style.display = "none";
+    document.getElementById("fish-name").value = '';
+    document.getElementById("fish-desc").value = '';
+    document.getElementById("fish-image").value = '';
+  };
 });

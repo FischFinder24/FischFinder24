@@ -28,8 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (error) alert(error.message);
     else {
       alert("Eingeloggt!");
-      document.getElementById("map").style.display = "block";
-      document.getElementById("logout").style.display = "inline-block";
+ document.getElementById("auth").style.display = "none";
+document.getElementById("map-container").style.display = "block";
+
       initMap();
     }
   };

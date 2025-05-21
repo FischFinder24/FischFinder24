@@ -99,16 +99,16 @@ button:hover {
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
 #map-container {
-  width: calc(100vw - 30px);      /* Abstand links + rechts = 15px */
-  height: calc(100vh - 30px);     /* Abstand oben + unten = 15px */
-  margin: 15px;                   /* gleichmäßiger Außenabstand */
-  padding: 0;                     /* falls nötig */
+  width: 90vw;
+  height: 85vh;
+  margin: 5vh auto;
   position: relative;
   display: none;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   border: 2px solid #ccc;
-  border-radius: 10px;
+  border-radius: 12px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 #map {
